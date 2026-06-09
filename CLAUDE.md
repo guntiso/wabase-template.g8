@@ -73,6 +73,6 @@ Defined in `src/main/g8/default.properties`:
 
 - Scala 3.8.2 (also supports 2.13.18 via cross-build)
 - Java 25 required
-- sbt 1.12.8
+- sbt 1.12.11
 - Integration tests in separate `it` sbt subproject (`src/it/`)
 - Test framework: ScalaTest 3.2.19
