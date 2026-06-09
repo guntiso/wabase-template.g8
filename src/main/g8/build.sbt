@@ -60,7 +60,7 @@ lazy val dependencies = Seq(
 )
 
 lazy val testsDependencies = Seq(
-  "org.scalatest" %% "scalatest" % "3.2.19" % Test
+  "org.scalatest" %% "scalatest" % "3.2.20" % Test
 )
 
 lazy val integrationTestDependencies = Seq(
