@@ -3,6 +3,7 @@ import sbtassembly.AssemblyPlugin.autoImport.assembly
 import sbtassembly.MergeStrategy
 import sbtassembly.PathList
 
+import org.mojoz.MojozPlugin
 import org.mojoz.metadata.ViewDef
 import org.mojoz.querease.Querease
 import org.mojoz.metadata.out.DdlGenerator
@@ -94,7 +95,7 @@ lazy val mojozSettings = Seq(
       override lazy val yamlMetadata          = mojozRawYamlMetadata.value
       override lazy val typeDefs              = mojozTypeDefs.value
       override lazy val tableMetadata         = mojozTableMetadata.value
-      override lazy val resourceClassLoader   = org.mojoz.MojozPlugin.getMojozResourceClassLoader((Compile / resourceDirectories).value ++ Seq((MojozMacroCompile / sbtClassDirectory).value))
+      override lazy val resourceClassLoader   = MojozPlugin.getMojozResourceClassLoader(mojozResourceClassLoaderFiles.value)
       override lazy val uninheritableExtras   = mojozUninheritableExtras.value
       override lazy val checkInvocations      = false
       override protected lazy val parserCacheSize = -1 // unlimited cache for compilation
