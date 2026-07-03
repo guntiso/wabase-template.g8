@@ -3,6 +3,8 @@ package $package_name$
 import org.wabase.client.WabaseHttpClient
 import org.wabase.{AppQuerease, DefaultAppQuerease, WabaseServer}
 
+import scala.concurrent.Await
+import scala.concurrent.duration._
 import scala.language.reflectiveCalls
 
 class RunningServer extends WabaseHttpClient {
@@ -20,7 +22,10 @@ class RunningServer extends WabaseHttpClient {
     }
   }
 
-  def unbind() = WabaseServer.unbind()
+  def unbind(): Unit = {
+    implicit val ec: scala.concurrent.ExecutionContext = WabaseServer.app.executor
+    Await.result(WabaseServer.unbindFuture, 30.seconds)
+  }
 }
 
 private object ServerState {
