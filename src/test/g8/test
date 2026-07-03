@@ -1,26 +1,35 @@
+> eval println("g8Test: clean")
 > clean
 > it/clean
 $ absent target/**/*.class
 $ absent target/**/wabase-seed-project-assembly-0.1.0-SNAPSHOT.jar
 
+> eval println("g8Test: compile")
 > compile
 $ exists target/**/*.class
 
+> eval println("g8Test: Test/compile")
 > Test/compile
 $ exists target/**/test-classes/**/*.class
 
+> eval println("g8Test: test")
 > test
 
+> eval println("g8Test: it/Test/compile")
 > it/Test/compile
 $ exists target/**/it/test-classes/**/*.class
 
+> eval println("g8Test: it/test")
 > it/test
 
+> eval println("g8Test: assembly")
 > assembly
 $ exists target/**/wabase-seed-project-assembly-0.1.0-SNAPSHOT.jar
 
+> eval println("g8Test: it/clean")
 > it/clean
 $ absent target/**/it/**/*.class
 
+> eval println("g8Test: clean (final)")
 > clean
 $ absent target/**/*.class
