@@ -39,17 +39,18 @@ lazy val dependencies = Seq(
   "io.github.samueleresca"      %% "pekko-quartz-scheduler" % "1.3.0-pekko-1.1.x",
   "org.hsqldb"                  %  "hsqldb"                 % "2.7.4",
 
-  "io.swagger.core.v3"          %  "swagger-jaxrs2-jakarta" % "2.2.45" exclude("jakarta.activation", "jakarta.activation-api"),
+  ("io.swagger.core.v3"         %  "swagger-jaxrs2-jakarta" % "2.2.45")
+    .exclude("jakarta.activation", "jakarta.activation-api"),
 
   "org.xhtmlrenderer"           %  "flying-saucer-pdf"      % "10.1.0",
 
   // Keep simple-java-mail: exclude other mail/activation
-  "org.simplejavamail"          %  "simple-java-mail"       % "8.12.6"
-    exclude("org.eclipse.angus","angus-mail")
-    exclude("org.eclipse.angus","angus-activation")
-    exclude("jakarta.mail","jakarta.mail-api")
-    exclude("jakarta.activation","jakarta.activation-api")
-    exclude("com.sun.activation","jakarta.activation"),
+  ("org.simplejavamail"         %  "simple-java-mail"       % "8.12.6")
+    .exclude("org.eclipse.angus", "angus-mail")
+    .exclude("org.eclipse.angus", "angus-activation")
+    .exclude("jakarta.mail", "jakarta.mail-api")
+    .exclude("jakarta.activation", "jakarta.activation-api")
+    .exclude("com.sun.activation", "jakarta.activation"),
 
   // for custom data validations
   "org.graalvm.js"              %  "js"                     % "25.0.2",
@@ -65,7 +66,7 @@ lazy val testsDependencies = Seq(
 )
 
 lazy val integrationTestDependencies = Seq(
-  "org.wabase" %% "wabase" % wabaseVersion % Test classifier "tests"
+  ("org.wabase" %% "wabase" % wabaseVersion % Test).classifier("tests")
 )
 
 lazy val commonSettings = Seq(
@@ -87,8 +88,10 @@ lazy val mojozSettings = Seq(
     "org.wabase.{ Dto, DtoWithId }"
   ),
   mojozShouldCompileViews := true,
-  mojozMdConventions := new DefaultAppMdConventions(org.mojoz.MojozTableMetadataPlugin.mojozResourceLoader((Compile / resourceDirectories).value))(),
-  mojozQuerease := {
+  mojozMdConventions := Def.uncached(
+    new DefaultAppMdConventions(org.mojoz.MojozTableMetadataPlugin.mojozResourceLoader((Compile / resourceDirectories).value))()
+  ),
+  mojozQuerease := Def.uncached {
     val _ = (MojozMacroCompile / mojozMacroCompile).value
     new AppQuerease with WabaseViewCompiler {
       override lazy val aliasToDb             = mojozDbAliasToDb.value
@@ -128,8 +131,8 @@ lazy val assemblySettings = Seq(
     case PathList("jakarta", "activation", _ @ _*) =>
       MergeStrategy.first
 
-    case x if x  endsWith  "logback-test.xml"         => MergeStrategy.discard
-    case x if x  endsWith  "logback-test.example.xml" => MergeStrategy.discard
+    case x if x.endsWith("logback-test.xml")          => MergeStrategy.discard
+    case x if x.endsWith("logback-test.example.xml")  => MergeStrategy.discard
 
     case x =>
       val oldStrategy = (assembly / assemblyMergeStrategy).value
@@ -157,33 +160,35 @@ lazy val root = (project in file("."))
     ),
 
     // avoid snapshot churn in CI
-    ThisBuild / updateOptions := updateOptions.value.withCachedResolution(true).withLatestSnapshots(false),
+    ThisBuild / updateOptions := updateOptions.value.withLatestSnapshots(false),
 
     commonSettings,
     mojozSettings,
     assemblySettings,
 
-    mojozSchemaSqlFiles := Seq(
+    mojozSchemaSqlFiles := Def.uncached(Seq(
       (LocalRootProject / baseDirectory).value / "db" / "db-schema.sql"
-    ),
-    mojozSchemaSqlGenerators := Seq(
+    )),
+    mojozSchemaSqlGenerators := Def.uncached(Seq(
       DdlGenerator.postgresql(typeDefs = mojozTypeDefs.value)
-    ),
-    Compile / copyResources := {
+    )),
+    Compile / compileIncremental := Def.uncached {
       val webFolder = baseDirectory.value / "web"
-      val mappings  = Path.selectSubpaths(webFolder, _.isFile).map {
-        case (f, p) => (f, (Compile / classDirectory).value / (webFolder.getName + "/" + p.replace('\\\\', '/')))
+      val classDir    = (Compile / classDirectory).value
+      Path.selectSubpaths(webFolder, _.isFile).foreach { case (f, p) =>
+        val dest = classDir / webFolder.getName / p.replace(java.io.File.separatorChar, '/')
+        IO.createDirectory(dest.getParentFile)
+        IO.copyFile(f, dest, preserveLastModified = true)
       }
-      Sync.sync(streams.value.cacheStoreFactory make "copy-web-resources")(mappings)
-      (Compile / copyResources).value ++ mappings
-    },
-    Compile / compile := { (Compile / copyResources).value; (Compile / compile).value }, // expose tresql props, web
+      (Compile / copyResources).value
+      (Compile / compileIncremental).value
+    }, // copy web and other resources
     Compile / mainClass := Some("org.wabase.WabaseServer")
   )
 
 lazy val it = (project in file("src/it"))
   .dependsOn(root % "test->test;compile->compile")
-  .settings(commonSettings: _*)
+  .settings(commonSettings*)
   .settings(
     publish / skip := true,
     libraryDependencies ++= (integrationTestDependencies ++ testsDependencies),

@@ -10,9 +10,10 @@ sbt ~reStart
 ```
 Runs the application in continuous mode: compiles on file changes and restarts the process automatically. Use the ~ prefix for watch mode.
 
-## To test
+## To test (quick then full)
 ``` bash
-sbt test it/test
+sbt "test; it/test"
+sbt "testFull; it/testFull"
 ```
 Executes all unit and integration tests in the project.
 
