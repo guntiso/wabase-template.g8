@@ -1,5 +1,6 @@
 package $package_name$
 
+import org.apache.pekko.actor.ActorSystem
 import org.wabase.client.WabaseHttpClient
 import org.wabase.{AppQuerease, DefaultAppQuerease, WabaseServer}
 
@@ -7,7 +8,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.reflectiveCalls
 
-class RunningServer extends WabaseHttpClient {
+class RunningServer extends WabaseHttpClient()(using ActorSystem("it-http-client")) {
 
   override protected def initQuerease: AppQuerease = DefaultAppQuerease
 
