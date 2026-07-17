@@ -29,4 +29,6 @@ report/
 .vscode
 
 # wabase business tests debugging
+*.exception
 *.received
+*.received-headers
