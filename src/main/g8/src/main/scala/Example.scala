@@ -11,6 +11,7 @@ object Example extends Loggable {
     tresql"""{demo(now())}"""
   }
 
+  @annotation.nowarn("msg=Manifest")
   def invocation(implicit res: Resources) = {
     tresql"""{demo(now())}""".unique[java.sql.Timestamp]
   }
