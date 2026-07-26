@@ -1,9 +1,8 @@
 package $package_name$
 
 import org.apache.pekko.actor.ActorSystem
-import org.apache.pekko.http.scaladsl.model.{HttpRequest, HttpResponse}
 import org.wabase.{AppQuerease, DefaultAppQuerease, WabaseServer}
-import org.wabase.client.{HttpClient, WabaseHttpClient}
+import org.wabase.client.WabaseHttpClient
 
 import scala.compiletime.uninitialized
 import scala.concurrent.Await
@@ -18,9 +17,6 @@ class RunningServer extends WabaseHttpClient()(using ActorSystem("it-http-client
   override def login(username: String = null, password: String = null) = {
     ""
   }
-
-  override protected def doRequest(req: HttpRequest, cookieStorage: CookieMap, timeout: FiniteDuration, maxRedirects: Int): Future[HttpResponse] =
-    super.doRequest(req.addAttribute(HttpClient.ModeKey, HttpClient.ProxyMode), cookieStorage, timeout, maxRedirects)
 
   private val readyF = ServerState.synchronized {
     if (!ServerState.started) {

@@ -1,0 +1,10 @@
+method:   PUT
+path:     /example_person?/P1
+request:
+  name:   Luigi
+response_status: 200 OK
+response_headers:
+  Location: example_person?/P1
+response: {
+  "code": "P1"
+}
