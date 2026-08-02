@@ -18,7 +18,7 @@ import scala.collection.immutable
 ThisBuild / scalaVersion := "3.8.4" // 2.13.18
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 
-val wabaseVersion      = "8.0.0-RC55-SNAPSHOT"
+val wabaseVersion      = "8.0.0-RC57-SNAPSHOT"
 val comSunActivationV  = "2.0.1"
 val comSunMailV        = "2.0.2"
 
@@ -32,20 +32,20 @@ initialize := {
 
 lazy val dependencies = Seq(
   "org.wabase"                  %% "wabase"                 % wabaseVersion,
-  "org.bouncycastle"            %  "bcprov-jdk18on"         % "1.83",
-  "org.bouncycastle"            %  "bcpkix-jdk18on"         % "1.83",
-  "com.github.jwt-scala"        %% "jwt-core"               % "11.0.3",
-  "com.github.jwt-scala"        %% "jwt-json-common"        % "11.0.3",
+  "org.bouncycastle"            %  "bcprov-jdk18on"         % "1.85",
+  "org.bouncycastle"            %  "bcpkix-jdk18on"         % "1.85",
+  "com.github.jwt-scala"        %% "jwt-core"               % "11.0.4",
+  "com.github.jwt-scala"        %% "jwt-json-common"        % "11.0.4",
   "io.github.samueleresca"      %% "pekko-quartz-scheduler" % "1.3.0-pekko-1.1.x",
   "org.hsqldb"                  %  "hsqldb"                 % "2.7.4",
 
-  ("io.swagger.core.v3"         %  "swagger-jaxrs2-jakarta" % "2.2.45")
+  ("io.swagger.core.v3"         %  "swagger-jaxrs2-jakarta" % "2.2.52")
     .exclude("jakarta.activation", "jakarta.activation-api"),
 
   "org.xhtmlrenderer"           %  "flying-saucer-pdf"      % "10.1.0",
 
   // Keep simple-java-mail: exclude other mail/activation
-  ("org.simplejavamail"         %  "simple-java-mail"       % "8.12.6")
+  ("org.simplejavamail"         %  "simple-java-mail"       % "9.1.0")
     .exclude("org.eclipse.angus", "angus-mail")
     .exclude("org.eclipse.angus", "angus-activation")
     .exclude("jakarta.mail", "jakarta.mail-api")

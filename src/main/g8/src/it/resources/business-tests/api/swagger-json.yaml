@@ -223,6 +223,16 @@ response: {
               }
             }
           },
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "\$ref" : "#/components/schemas/example_person_key_response"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request"
           },
@@ -530,6 +540,16 @@ response: {
               }
             }
           },
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "\$ref" : "#/components/schemas/validation_key_response"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request"
           },
@@ -765,7 +785,7 @@ response: {
             "readOnly" : false
           }
         },
-        "required" : [ "id", "filename", "upload_time", "content_type", "size", "sha_256" ]
+        "required" : [ "content_type", "filename", "id", "sha_256", "size", "upload_time" ]
       },
       "validation" : {
         "type" : "object",

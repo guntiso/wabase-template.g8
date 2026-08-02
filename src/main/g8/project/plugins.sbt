@@ -3,7 +3,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.wabase" %% "wabase" % "8.0.0-RC55-SNAPSHOT",
+  "org.wabase" %% "wabase" % "8.0.0-RC57-SNAPSHOT",
 )
 
 addSbtPlugin("org.mojoz"          % "sbt-mojoz"     % "8.0.1")
