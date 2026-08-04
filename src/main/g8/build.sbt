@@ -88,6 +88,7 @@ lazy val mojozSettings = Seq(
     "org.wabase.{ Dto, DtoWithId }"
   ),
   mojozShouldCompileViews := true,
+  mojozShouldGenerateDtoImplied := false, // use dto field in views to override
   mojozMdConventions := Def.uncached(
     new DefaultAppMdConventions(org.mojoz.MojozTableMetadataPlugin.mojozResourceLoader((Compile / resourceDirectories).value))()
   ),

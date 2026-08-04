@@ -1,6 +1,7 @@
 name:   example_person
 table:  person
 api:    public get upsert list delete
+dto:    true
 fields:
 - code
 - name
