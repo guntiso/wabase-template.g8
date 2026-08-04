@@ -45,7 +45,7 @@ lazy val dependencies = Seq(
   "org.xhtmlrenderer"           %  "flying-saucer-pdf"      % "10.4.0",
 
   // Keep simple-java-mail: exclude other mail/activation
-  ("org.simplejavamail"         %  "simple-java-mail"       % "9.1.0")
+  ("org.simplejavamail"         %  "simple-java-mail"       % "9.1.3")
     .exclude("org.eclipse.angus", "angus-mail")
     .exclude("org.eclipse.angus", "angus-activation")
     .exclude("jakarta.mail", "jakarta.mail-api")
