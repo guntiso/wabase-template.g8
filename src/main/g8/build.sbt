@@ -39,7 +39,7 @@ lazy val dependencies = Seq(
   "io.github.samueleresca"      %% "pekko-quartz-scheduler" % "1.3.0-pekko-1.1.x",
   "org.hsqldb"                  %  "hsqldb"                 % "2.7.4",
 
-  ("io.swagger.core.v3"         %  "swagger-jaxrs2-jakarta" % "2.2.52")
+  ("io.swagger.core.v3"         %  "swagger-jaxrs2-jakarta" % "2.2.53")
     .exclude("jakarta.activation", "jakarta.activation-api"),
 
   "org.xhtmlrenderer"           %  "flying-saucer-pdf"      % "10.4.0",
