@@ -2,7 +2,7 @@ name:   template_rendering_example
 api:    public get
 get:
 - template = '<!DOCTYPE html><html><head><title>{{title}}</title></head><body><h1>{{header}}</h1><p>{{body}}</p></body></html>'
-- template { :template || '|' || :filename }  # XXX concating filename to choose renderer # TODO Content-Type   
+- template body=:template target_name=:filename
 swagger:
   parameters:
     - name: title
