@@ -77,4 +77,4 @@ Defined in `src/main/g8/default.properties`:
 - Wabase `8.0.0`
 - Integration tests in separate `it` sbt subproject (`src/it/`)
 - Test framework: ScalaTest 3.2.20
-- SMTP: Simple Java Mail 9.3.1
+- SMTP: Simple Java Mail 9.3.2
