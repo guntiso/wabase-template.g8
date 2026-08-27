@@ -71,7 +71,7 @@ Defined in `src/main/g8/default.properties`:
 
 ## Scala/Build Details
 
-- Scala 3.8.4 (also supports 2.13.18 via cross-build)
+- Scala 3.9.0
 - Java 25 required
 - sbt 2.0.7
 - Wabase `8.1.0`

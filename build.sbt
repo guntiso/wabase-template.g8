@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
   .settings(
     name := "Wabase Template",
-    scalaVersion := "3.8.4",
+    scalaVersion := "3.9.0",
     // ScriptedPlugin is enabled for scripted task keys; overrides below must stay in
     // build.sbt so they win over ScriptedPlugin defaults (which skip Test/g8).
     sbtTestDirectory := target.value / "sbt-test",
