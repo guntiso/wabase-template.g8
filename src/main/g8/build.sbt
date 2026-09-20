@@ -77,7 +77,9 @@ lazy val commonSettings = Seq(
     "-encoding", "utf8"
   ),
   fork := true,
-  Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oDS")
+  Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oDS"),
+  // race - sbt 2 can run uncached Compile/copyResources twice in parallel (compileIncremental + compile)
+  // concurrentRestrictions := Seq(Tags.limitAll(1))
 )
 
 lazy val mojozSettings = Seq(
