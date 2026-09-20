@@ -63,7 +63,7 @@ Defined in `src/main/g8/default.properties`:
 - Scheduled jobs via Pekko Quartz (`cron_job.yaml`)
 - GraalVM JS engine for YAML-defined validation rules
 - PDF rendering (Flying Saucer)
-- SMTP email (Simple Java Mail)
+- SMTP email (Simple Java Mail), with a YAML `email html` action example and GreenMail business tests
 
 **Database:** HSQLDB in-memory by default; PostgreSQL via `.env` overrides.
 

@@ -19,8 +19,6 @@ ThisBuild / scalaVersion := "3.9.0" // 2.13.18
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 val wabaseVersion      = "9.0.0-SNAPSHOT"
-val comSunActivationV  = "2.0.1"
-val comSunMailV        = "2.0.2"
 
 javacOptions ++= Seq("-source", "25", "-target", "25", "-Xlint")
 initialize := {
@@ -40,25 +38,15 @@ lazy val dependencies = Seq(
   "org.hsqldb"                  %  "hsqldb"                 % "2.7.4",
 
   ("io.swagger.core.v3"         %  "swagger-jaxrs2-jakarta" % "2.2.54")
-    .exclude("jakarta.activation", "jakarta.activation-api"),
+    .exclude("com.sun.activation", "jakarta.activation"),
 
   "org.xhtmlrenderer"           %  "flying-saucer-pdf"      % "10.5.0",
 
-  // Keep simple-java-mail: exclude other mail/activation
-  ("org.simplejavamail"         %  "simple-java-mail"       % "9.3.2")
-    .exclude("org.eclipse.angus", "angus-mail")
-    .exclude("org.eclipse.angus", "angus-activation")
-    .exclude("jakarta.mail", "jakarta.mail-api")
-    .exclude("jakarta.activation", "jakarta.activation-api")
-    .exclude("com.sun.activation", "jakarta.activation"),
+  "org.simplejavamail"          %  "simple-java-mail"       % "9.3.2",
 
   // for custom data validations
   "org.graalvm.js"              %  "js"                     % "25.3.4.1",
   "org.graalvm.js"              %  "js-scriptengine"        % "25.3.4.1",
-
-  // activation + mail implementation --> keep (com.sun.*)
-  "com.sun.activation"          %  "jakarta.activation"     % comSunActivationV,
-  "com.sun.mail"                %  "jakarta.mail"           % comSunMailV
 )
 
 lazy val testsDependencies = Seq(
@@ -66,7 +54,8 @@ lazy val testsDependencies = Seq(
 )
 
 lazy val integrationTestDependencies = Seq(
-  ("org.wabase" %% "wabase" % wabaseVersion % Test).classifier("tests")
+  ("org.wabase" %% "wabase" % wabaseVersion % Test).classifier("tests"),
+  "com.icegreen" % "greenmail" % "2.1.3" % Test
 )
 
 lazy val commonSettings = Seq(
@@ -129,11 +118,6 @@ lazy val assemblySettings = Seq(
         MergeStrategy.concat(conflicts.reverse)
       }
 
-    case PathList("jakarta", "mail", _ @ _*) =>
-      MergeStrategy.first
-    case PathList("jakarta", "activation", _ @ _*) =>
-      MergeStrategy.first
-
     case x if x.endsWith("logback-test.xml")          => MergeStrategy.discard
     case x if x.endsWith("logback-test.example.xml")  => MergeStrategy.discard
 
@@ -149,12 +133,6 @@ lazy val root = (project in file("."))
   .settings(
     name := "$name$",
     libraryDependencies ++= dependencies ++ testsDependencies,
-
-    // dependency overrides: force the single com.sun.* activation + mail impl
-    dependencyOverrides ++= Seq(
-      "com.sun.activation" % "jakarta.activation" % comSunActivationV,
-      "com.sun.mail"       % "jakarta.mail"       % comSunMailV
-    ),
 
     resolvers ++= Seq(
       "snapshots" at "https://central.sonatype.com/repository/maven-snapshots",

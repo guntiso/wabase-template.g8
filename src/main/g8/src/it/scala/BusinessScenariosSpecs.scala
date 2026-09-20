@@ -25,9 +25,11 @@ class BusinessScenariosSpecs extends BusinessScenariosBaseSpecs("business-tests"
   //override def resourcePath = "resources/"
   override def initHttpClient = server
   override def beforeAll() = {
+    GreenMailServer.startIfEnabled(config)
   }
   override def afterAll() = {
-    server.unbind() // unbind for cross-scala tests
+    try server.unbind() // unbind for cross-scala tests
+    finally GreenMailServer.stop()
   }
 
   override def scenariosAutoLogin  = false
