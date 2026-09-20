@@ -74,7 +74,7 @@ Defined in `src/main/g8/default.properties`:
 - Scala 3.9.0
 - Java 25 required
 - sbt 2.0.7
-- Wabase `8.1.0`
+- Wabase `8.1.2`
 - Integration tests in separate `it` sbt subproject (`src/it/`)
 - Test framework: ScalaTest 3.2.20
 - SMTP: Simple Java Mail 9.3.2
